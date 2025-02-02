@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Pokémon List</h1>
+
+    <form action="/pokemon" method="get" onsubmit="return submitSearch()">
+        <input type="text" id="searchBar" name="name" placeholder="Search Pokémon by Name or Number..." onkeyup="filterPokemon()" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="pokemon-grid">
+        {% for pokemon in pokemon_list %}
+        <div class="pokemon-card" data-name="{{ pokemon.name.lower() }}" data-id="{{ pokemon.id }}">
+            <a href="/pokemon/{{ pokemon.name.lower() }}">
+                <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}">
+                <h2>#{{ pokemon.id }} {{ pokemon.name }}</h2>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function filterPokemon() {
+            let input = document.getElementById("searchBar").value.toLowerCase();
+            let cards = document.getElementsByClassName("pokemon-card");
+
+            for (let i = 0; i < cards.length; i++) {
+                let name = cards[i].getAttribute("data-name");
+                let id = cards[i].getAttribute("data-id");
+
+                if (name.includes(input) || id.includes(input)) {
+                    cards[i].style.display = "block";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        function submitSearch() {
+            let input = document.getElementById("searchBar").value.trim();
+            if (input === "") {
+                alert("Please enter a Pokémon name or number.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

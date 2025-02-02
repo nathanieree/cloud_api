@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Not Found</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Oops!</h1>
+    <p>
+      We couldn't find a Pokémon with the name "<strong>{{ name }}</strong>".
+      Please check the name and try again.
+    </p>
+    <a href="/">← Back to Pokémon List</a>
+  </body>
+</html>

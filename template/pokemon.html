@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ pokemon.name }} - Pokémon Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <a href="/">← Back to Pokémon List</a>
+    <div class="pokemon-details">
+        <h1>{{ pokemon.name }}</h1>
+        <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}">
+        <p><strong>Height:</strong> {{ pokemon.height }}</p>
+        <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
+        <p><strong>Types:</strong> {{ pokemon.types | join(", ") }}</p>
+        <p><strong>Abilities:</strong> {{ pokemon.abilities | join(", ") }}</p>
+    </div>
+</body>
+</html>
