@@ -16,8 +16,8 @@
 
     <div class="pokemon-grid">
         {% for pokemon in pokemon_list %}
-        <div class="pokemon-card" data-name="{{ pokemon.name.lower() }}" data-id="{{ pokemon.id }}">
-            <a href="/pokemon/{{ pokemon.name.lower() }}">
+        <div class="pokemon-card" data-name="{{ pokemon.name.lower() }}" data-id="{{ pokemon.id }} ">
+            <a href="/pokemon/{{ pokemon.name.upper() }}">
                 <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}">
                 <h2>#{{ pokemon.id }} {{ pokemon.name }}</h2>
             </a>

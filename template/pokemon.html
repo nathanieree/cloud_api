@@ -15,6 +15,17 @@
         <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
         <p><strong>Types:</strong> {{ pokemon.types | join(", ") }}</p>
         <p><strong>Abilities:</strong> {{ pokemon.abilities | join(", ") }}</p>
+       
+        <!-- Display Base Stats -->
+        <h2>Base Stats</h2>
+        <ul>
+            <li><strong>HP:</strong> {{ pokemon.stats.hp }}</li>
+            <li><strong>Attack:</strong> {{ pokemon.stats.attack }}</li>
+            <li><strong>Defense:</strong> {{ pokemon.stats.defense }}</li>
+            <li><strong>Special Attack:</strong> {{ pokemon.stats['special-attack'] }}</li>
+            <li><strong>Special Defense:</strong> {{ pokemon.stats['special-defense'] }}</li>
+            <li><strong>Speed:</strong> {{ pokemon.stats.speed }}</li>
+        </ul>
     </div>
 </body>
 </html>
