@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 import requests
+from weather import get_weather, match_weather_to_pokemon_type  # Import weather functions
+from wikipedia import get_pokemon_summary # Import the Wikipedia function
+from spotify import get_playlist_for_pokemon
+
 
 app = Flask(__name__, template_folder='template', static_folder='static')
 
 POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon?limit=100"
-
 
 
 @app.route('/')
@@ -56,11 +59,36 @@ def pokemon_details(name):
             "weight": data['weight'],
             "abilities": [ability['ability']['name'] for ability in data['abilities']],
             "types": [t['type']['name'] for t in data['types']],
-            "stats": {stat["stat"]["name"]: stat["base_stat"] for stat in data["stats"]}
+            "stats": {stat["stat"]["name"]: stat["base_stat"] for stat in data["stats"]},
+            
         }
-        return render_template('pokemon.html', pokemon=pokemon_info)
+          # Fetch Pokémon summary from Wikipedia
+        summary = get_pokemon_summary(pokemon_info['name'])
+        
+
+       # Match Pokémon type with weather
+        pokemon_type = pokemon_info['types'][0]
+        matched_weather = match_weather_to_pokemon_type(pokemon_type)
+        spotify_playlist_id = get_playlist_for_pokemon(pokemon_type)
+        
+        return render_template('pokemon.html', pokemon=pokemon_info, matched_weather=matched_weather, summary=summary, spotify_playlist_id=spotify_playlist_id)
     
     return render_template('not_found.html', name=name), 404
+
+@app.route('/weather', methods=['GET'])
+def weather_page():
+    """Fetch and display weather data based on user input."""
+    city = request.args.get('city', '').strip()
+    
+    if not city:
+        return render_template('weather.html')  # Show the search form if no input
+    
+    weather_data = get_weather(city)
+    if weather_data:
+        return render_template('weather.html', city=city, weather=weather_data["condition"], temperature=weather_data["temperature"])
+    
+    return render_template('weather.html', city=city, weather="Not found", temperature="N/A")
+
 
 if __name__ == '__main__':
     app.run(debug=True)

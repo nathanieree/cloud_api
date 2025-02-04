@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Information</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Weather Information</h1>
+
+    <form action="/weather" method="get">
+      <input
+        type="text"
+        name="city"
+        placeholder="Enter city for weather"
+        required
+      />
+      <button type="submit">Check Weather</button>
+    </form>
+
+    {% if city %}
+    <h2>Weather in {{ city }}</h2>
+    <p><strong>Condition:</strong> {{ weather }}</p>
+    <p><strong>Temperature:</strong> {{ temperature }}°C</p>
+    {% endif %}
+
+    <a href="/">← Back to Pokémon List</a>
+  </body>
+</html>
