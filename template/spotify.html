@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Playlists</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body >
+
+    <h1 id="main-title" class="title">Pokémon Playlists</h1>
+
+    <!-- Add New Playlist -->
+    <form id="playlist-form" class="form-container" action="/spotify/add" method="POST">
+        <input id="pokemon-type" class="input-field" type="text" name="pokemon_type" placeholder="Pokémon Type" required>
+        <input id="playlist-id" class="input-field" type="text" name="playlist_id" placeholder="Playlist ID" required>
+        <button id="add-button" class="btn">Add Playlist</button>
+    </form>
+     <!-- Random Playlist Section -->
+        <div id="random-playlist-container" class="pokemon-music">
+            <h2 id="random-playlist-title" class="subtitle">Random Pokémon Playlist</h2>
+            <button id="random-playlist-btn" class="btn" onclick="fetchRandomPlaylist()">Get Random Playlist</button>
+            <p id="random-playlist-output" class="output-text"></p>
+        </div>
+
+    <!-- Display Playlists -->
+    <table id="playlist-table" class="table">
+        <tr id="table-header">
+            <th class="table-heading">Pokémon Type</th>
+            <th class="table-heading">Playlist ID</th>
+            <th class="table-heading">Actions</th>
+        </tr>
+        {% for type, playlist in playlists.items() %}
+        <tr class="table-row">
+            <td class="table-data">{{ type }}</td>
+            <td class="table-data">{{ playlist }}</td>
+            <td class="table-actions">
+                <!-- Update Playlist -->
+                <form class="update-form" action="/spotify/update/{{ type }}" method="POST">
+                    <input class="input-field update-input" type="text" name="playlist_id" placeholder="New Playlist ID" required>
+                    <button class="btn update-btn">Update</button>
+                </form>
+
+                <!-- Delete Playlist -->
+                <a class="delete-link" href="/spotify/delete/{{ type }}">
+                    <button class="btn delete-btn">Delete</button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/">← Back to Pokémon List</a>
+
+    <script>
+        function fetchRandomPlaylist() {
+            fetch('/spotify/random-playlist')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('random-playlist-output').innerHTML = 
+                        `Type: ${data.pokemon_type} <br> Playlist ID: ${data.playlist_id}`;
+                })
+                .catch(error => console.error('Error fetching playlist:', error));
+        }
+    </script>
+
+</body>
+</html>
