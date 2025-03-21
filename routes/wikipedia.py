@@ -1,4 +1,8 @@
 import wikipediaapi
+from flask import Blueprint, render_template
+
+wikipedia_bp = Blueprint("wikipedia", __name__)
+
 
 # Initialize the Wikipedia API with a custom user-agent
 wiki = wikipediaapi.Wikipedia(

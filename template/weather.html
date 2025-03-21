@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Information</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
-  </head>
-  <body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
     <h1>Weather Information</h1>
 
+    <!-- Weather Search Form -->
     <form action="/weather" method="get">
-      <input
-        type="text"
-        name="city"
-        placeholder="Enter city for weather"
-        required
-      />
-      <button type="submit">Check Weather</button>
+        <input type="text" name="city" placeholder="Enter city for weather" required>
+        <button type="submit">Check Weather</button>
     </form>
 
     {% if city %}
-    <h2>Weather in {{ city }}</h2>
-    <p><strong>Condition:</strong> {{ weather }}</p>
-    <p><strong>Temperature:</strong> {{ temperature }}°C</p>
+        <h2>Weather in {{ city }}</h2>
+        <p><strong>Condition:</strong> {{ weather }}</p>
+        <p><strong>Temperature:</strong> {{ temperature }}°C</p>
+    {% endif %}
+
+    <!-- Pokémon Weather Match -->
+    {% if pokemon_type %}
+        <h2>Recommended Weather for {{ pokemon_type }}</h2>
+        <p><strong>Best Weather Condition:</strong> {{ matched_weather }}</p>
+    {% endif %}
+
+    <!-- Weather Effect on Pokémon Battle -->
+    {% if weather_condition %}
+        <h2>Battle Effects of {{ weather_condition }} Weather</h2>
+        <p><strong>Boosts:</strong> {{ boost }} Pokémon</p>
+        <p><strong>Weakens:</strong> {{ nerf }} Pokémon</p>
     {% endif %}
 
     <a href="/">← Back to Pokémon List</a>
-  </body>
+</body>
 </html>
