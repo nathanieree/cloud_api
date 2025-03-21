@@ -3,7 +3,7 @@ import requests
 
 home_bp = Blueprint("home", __name__)
 
-POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon?limit=150"
+POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon?limit=50"
 
 @home_bp.route('/')
 def home():
